@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HotelManageDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CheckOut">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="OrderId" Type="Int32" />
+    <Property Name="CheckOutDate" Type="DateTime" Precision="3" />
+    <Property Name="refundAmount" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="Commodity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Stock" Type="Int32" />
+    <Property Name="SeparableNum" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Commodity_Consume">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="CommodityId" Type="Int32" />
+    <Property Name="CommodityNum" Type="Int32" />
+    <Property Name="OrderId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="RoomId" Type="Int32" Nullable="false" />
+    <Property Name="ConsumeId" Type="Int32" />
+    <Property Name="purchaseDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="Deposit" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDCard" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Sex" Type="Boolean" Nullable="false" />
+    <Property Name="ActualMoney" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="EstimatedTime" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="LiveDays" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Regulations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="RegulationsContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="DeptIdList" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="StaffName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="Room_TypeId" Type="Int32" />
+    <Property Name="Room_DiscountId" Type="Int32" />
+    <Property Name="Room_AmountId" Type="Int32" />
+    <Property Name="GoodLuckNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FloorNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CompleteNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Room_CommodityId" Type="Int32" />
+    <Property Name="Room_StateId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Room_Commodity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="RoomId" Type="Int32" />
+    <Property Name="CommodityId" Type="Int32" />
+    <Property Name="CommodityNum" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Room_Discount">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="RoomId" Type="Int32" />
+    <Property Name="DiscountNum" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Room_State">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="RoomId" Type="Int32" />
+    <Property Name="StateTxt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Room_Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="RoomName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RoomId" Type="Int32" />
+    <Property Name="BedNum" Type="Int32" />
+    <Property Name="TypeTxt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Sex" Type="Boolean" Nullable="false" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="Nation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DeptId" Type="Int32" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Staff_StateId" Type="Int32" />
+    <Property Name="Staff_DdentityId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Staff_Ddentity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="StaffId" Type="Int32" />
+    <Property Name="DdentityTxt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Staff_Dept">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="StaffId" Type="Int32" />
+    <Property Name="DeptTxt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Staff_State">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="StaffId" Type="Int32" />
+    <Property Name="StateTxt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="HotelManageDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CheckOut" EntityType="Self.CheckOut" />
+    <EntitySet Name="Commodity" EntityType="Self.Commodity" />
+    <EntitySet Name="Commodity_Consume" EntityType="Self.Commodity_Consume" />
+    <EntitySet Name="Order" EntityType="Self.Order" />
+    <EntitySet Name="Regulations" EntityType="Self.Regulations" />
+    <EntitySet Name="Room" EntityType="Self.Room" />
+    <EntitySet Name="Room_Commodity" EntityType="Self.Room_Commodity" />
+    <EntitySet Name="Room_Discount" EntityType="Self.Room_Discount" />
+    <EntitySet Name="Room_State" EntityType="Self.Room_State" />
+    <EntitySet Name="Room_Type" EntityType="Self.Room_Type" />
+    <EntitySet Name="Staff" EntityType="Self.Staff" />
+    <EntitySet Name="Staff_Ddentity" EntityType="Self.Staff_Ddentity" />
+    <EntitySet Name="Staff_Dept" EntityType="Self.Staff_Dept" />
+    <EntitySet Name="Staff_State" EntityType="Self.Staff_State" />
+    <EntitySet Name="Room_Amount" EntityType="HotelManageDBModel.Room_Amount" />
+    <EntitySet Name="Commodity_Purchase" EntityType="HotelManageDBModel.Commodity_Purchase" />
+  </EntityContainer>
+  <EntityType Name="Room_Amount">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="RoomId" Type="Int32" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Commodity_Purchase">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstablishDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <Property Name="CommodityNum" Type="Int32" />
+    <Property Name="CommodityId" Type="Int32" />
+  </EntityType>
+</Schema>

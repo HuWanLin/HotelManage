@@ -1,0 +1,7 @@
+I:\HotelManage\HotelManage.BLL\bin\Release\HotelManage.BLL.dll
+I:\HotelManage\HotelManage.BLL\bin\Release\HotelManage.BLL.pdb
+I:\HotelManage\HotelManage.BLL\bin\Release\HotelManage.Models.dll
+I:\HotelManage\HotelManage.BLL\bin\Release\HotelManage.Models.pdb
+I:\HotelManage\HotelManage.BLL\obj\Release\HotelManage.BLL.csprojResolveAssemblyReference.cache
+I:\HotelManage\HotelManage.BLL\obj\Release\HotelManage.BLL.dll
+I:\HotelManage\HotelManage.BLL\obj\Release\HotelManage.BLL.pdb

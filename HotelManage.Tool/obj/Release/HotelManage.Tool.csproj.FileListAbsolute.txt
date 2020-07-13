@@ -1,0 +1,5 @@
+I:\HotelManage\HotelManage.Tool\bin\Release\HotelManage.Tool.dll
+I:\HotelManage\HotelManage.Tool\bin\Release\HotelManage.Tool.pdb
+I:\HotelManage\HotelManage.Tool\obj\Release\HotelManage.Tool.csprojResolveAssemblyReference.cache
+I:\HotelManage\HotelManage.Tool\obj\Release\HotelManage.Tool.dll
+I:\HotelManage\HotelManage.Tool\obj\Release\HotelManage.Tool.pdb

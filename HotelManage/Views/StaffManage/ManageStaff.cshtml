@@ -1,0 +1,256 @@
+﻿<link rel="stylesheet" type="text/css" href="~/Content/jquery-easyui-1.6.11/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/jquery-easyui-1.6.11/themes/icon.css" />
+<script type="text/javascript" src="~/Content/jquery-easyui-1.6.11/jquery.min.js"></script>
+<script type="text/javascript" src="~/Content/jquery-easyui-1.6.11/jquery.easyui.min.js"></script>
+
+<style>
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+</style>
+@*显示数据的表格  *@
+<table id="dgs" class="easyui-datagrid" style="width:100%;height:100%;"
+       url="/StaffManage/GetAllStaff" toolbar="#toolbar" striped="true" loadMsg="正在加载数据" rownumbers="true" fitColumns="true" singleSelect="true">
+    <thead>
+        <tr>
+            <th field="Id" width="50">编号</th>
+            <th field="Name" width="50">姓名</th>
+            <th field="DeptTxt" width="50">部门</th>
+            <th field="Sex" width="50">性别</th>
+            <th field="Age" width="50">年龄</th>
+            <th field="Nation" width="50">民族</th>
+            <th field="Phone" width="50">手机</th>
+            <th field="Email" width="50">邮箱</th>
+            <th field="EstablishDate" width="50">创建时间</th>
+            <th field="StateTxt" width="50">员工状态</th>
+        </tr>
+    </thead>
+</table>
+
+@*表格的工具栏*@
+<div id="toolbar" style="padding:8px;height:auto">
+    <div style="margin-bottom:5px">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="showUserInJ()">添加员工</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="showUserIn()">修改信息</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除信息</a>
+        <span style="margin-right:10px;">员工姓名：</span><input id="name" name="name" class="easyui-textbox" style="width:100px">
+        <span style="margin-right:10px;">员工部门：</span><input id="dept" name="dept" class="easyui-combobox" editable="false" style="width:100px" data-options="url:'/DeptManage/GetAllDept/1',method:'get',valueField:'Id',textField:'DeptTxt', panelHeight:'auto'">
+        <span style="margin-right:10px;">员工状态：</span><input id="state" name="state" class="easyui-combobox" editable="false" style="width:100px" data-options="url:'/StaffManage/GetALLStaffTxt/1',method:'get',valueField:'Id',textField:'StateTxt', panelHeight:'auto'">
+        <a href="#" class="easyui-linkbutton" style="margin-left:10px;" iconCls="icon-search" onclick="doSearch()">搜索</a>
+    </div>
+</div>
+
+@**弹出的信息修改框*@
+<div id="dlgUserIn" class="easyui-dialog" style="width:400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+    <form id="fmUserIn" method="post" novalidate style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px">
+            <input name="Id" editable="false" class="easyui-textbox" label="编号:" style="width:100%">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="Name" class="easyui-textbox" label="姓名:" style="width:100%">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="Sex" class="easyui-combobox easyui-validatebox" name="Sex" editable="false" label="性别:" style="width:100%" data-options="required:true,url:'/PersonalManage/GetSex',method:'get',valueField:'Sex',textField:'Sex', panelHeight:'auto'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="Age" class="easyui-textbox" label="年龄:" style="width:100%">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="nation" class="easyui-combobox" name="Nation" editable="false" label="民族:" style="width:100%" data-options="url:'/PersonalManage/GetNation',method:'get',valueField:'text',textField:'text', panelHeight:'200'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="Phone" class="easyui-textbox easyui-validatebox" editable="false" label="手机:" style="width:100%" data-options="required:true,missingMessage:'请不要留空'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="Email" class="easyui-textbox" label="邮箱:" style="width:100%">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="DeptTxt" name="DeptTxt" class="easyui-combobox" label="部门" editable="false" style="width:100%" data-options="url:'/DeptManage/GetAllDept/0',method:'get',valueField:'DeptTxt',textField:'DeptTxt', panelHeight:'auto'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="StateTxt" name="StateTxt" class="easyui-combobox" label="状态" editable="false" style="width:100%" data-options="url:'/StaffManage/GetALLStaffTxt/0',method:'get',valueField:'StateTxt',textField:'StateTxt', panelHeight:'auto'">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="editUserIn()" style="width:90px">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript: $('#dlgUserIn').dialog('close')" style="width:90px">关闭</a>
+</div>
+
+@**弹出的添加框*@
+<div id="dlgUserInJ" class="easyui-dialog" style="width:400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+    <form id="fmUserInJ" method="post" novalidate style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px">
+            <input name="Name" class="easyui-textbox" label="姓名:" style="width:100%" data-options="required:true,missingMessage:'请不要留空'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="Sex" class="easyui-combobox" name="Sex" editable="false" label="性别:" style="width:100%" data-options="url:'/PersonalManage/GetSex',method:'get',valueField:'Id',textField:'Sex', panelHeight:'auto',required:true,missingMessage:'请不要留空'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="Age" class="easyui-textbox" label="年龄:" style="width:100%" data-options="required:true,missingMessage:'请不要留空'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="nation" class="easyui-combobox" name="Nation" editable="false" label="民族:" style="width:100%" data-options="url:'/PersonalManage/GetNation',method:'get',valueField:'text',textField:'text', panelHeight:'200',required:true,missingMessage:'请不要留空'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="Phone" class="easyui-textbox easyui-validatebox" label="手机:" style="width:100%" data-options="required:true,missingMessage:'请不要留空'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="Email" class="easyui-textbox" label="邮箱:" style="width:100%" data-options="required:true,missingMessage:'请不要留空'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="dept" name="DeptTxt" class="easyui-combobox" label="部门" editable="false" style="width:100%" data-options="url:'/DeptManage/GetAllDept/0',method:'get',valueField:'Id',textField:'DeptTxt', panelHeight:'auto',required:true,missingMessage:'请不要留空'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="StateTxt" name="StateTxt" class="easyui-combobox" label="状态" editable="false" style="width:100%" data-options="url:'/StaffManage/GetALLStaffTxt/0',method:'get',valueField:'Id',textField:'StateTxt', panelHeight:'auto',required:true,missingMessage:'请不要留空'">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="editUserInJ()" style="width:90px">添加</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript: $('#dlgUserInJ').dialog('close')" style="width:90px">关闭</a>
+</div>
+
+<script>
+    /*设置分页属性*/
+    $(function () {
+        init_datagrid();
+    });
+
+    function dgReload() {
+        $('#DeptTxt').combobox('reload');
+        $('#StateTxt').combobox('reload');
+    }
+
+    /*表格属性初始化*/
+    function init_datagrid() {
+        $("#dgs").datagrid({
+            method: 'post',
+            singleSelect: true,
+            remoteSort: true, //定义从服务器对数据进行排序。
+            pagination: true, //在DataGrid控件底部显示分页工具栏。
+            pageNumber: 1,
+            pageSize: 20,
+            pageList: [5, 10, 15, 20],
+            fitColumns: true,
+            rownumbers: true,
+            checkbox: true,
+            selectOnCheck: false,
+            checkOnSelect: false,
+        });
+
+        var p = $('#dgs').datagrid('getPager');
+        $(p).pagination({
+            beforePageText: '第',//页数文本框前显示的汉字
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示 {from}-{to} 条记录,共 {total} 条记录',
+        })
+    }
+    /*搜索按钮*/
+    function doSearch() {
+        $('#dgs').datagrid('load', {
+            name: $('#name').val(),
+            dept: $('#dept').val(),
+            state: $('#state').val(),
+        });
+    }
+
+    /*信息增加*/
+    function showUserInJ() {
+        $('#fmUserInJ').form('clear');
+        $('#dlgUserInJ').dialog('open').dialog('center').dialog('setTitle', '录入员工');
+    }
+
+    function editUserInJ() {
+        $('#fmUserInJ').form('submit', {
+            url: '/StaffManage/AddStaff',
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.success) {
+                    $('#dlgUserInJ').dialog('close');
+                    $('#dgs').datagrid('reload');
+                } else {
+                    $.messager.show({
+                        title: '添加错误',
+                        msg: result.executeResult,
+                        timeout: 1000,
+                        showType: 'show'
+                    });
+                }
+            }
+        });
+    }
+
+    /*信息修改*/
+    function showUserIn() {
+        $('#fmUserIn').form('clear');
+        var row = $('#dgs').datagrid('getSelected');
+        if (row) {
+            $('#dlgUserIn').dialog('open').dialog('center').dialog('setTitle', '修改员工信息');
+            $('#fmUserIn').form('load', row);
+        } else {
+            $.messager.show({
+                title: '修改提醒',
+                msg: '请选择一行数据 ！',
+                timeout: 1000,
+                showType: 'show'
+            });
+        }
+    }
+
+    function editUserIn() {
+        $('#fmUserIn').form('submit', {
+            url: '/StaffManage/EditStaff',
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.success) {
+                    $('#dlgUserIn').dialog('close');
+                    $('#dgs').datagrid('reload');
+                } else {
+                    $.messager.show({
+                        title: '修改错误',
+                        msg: result.executeResult,
+                        timeout: 1000,
+                        showType: 'show'
+                    });
+                }
+            }
+        });
+    }
+
+    /*删除*/
+    function destroyUser() {
+        var row = $('#dgs').datagrid('getSelected');
+        if (row) {
+            $.messager.defaults = { ok: "是", cancel: "否" };
+            $.messager.confirm('提醒', '你确定要删除这条员工信息嘛?', function (r) {
+                if (r) {
+                    $.post('/StaffManage/DestroyStaff/' + row.Id, function (result) {
+                        if (result.success) {
+                            $('#dgs').datagrid('reload');
+                        } else {
+                            $.messager.show({
+                                title: '错误',
+                                msg: result.executeResult
+                            });
+                        }
+                    }, 'json');
+                }
+            });
+        } else {
+            $.messager.show({
+                title: '删除提醒',
+                msg: '请选择一行数据 ！',
+                timeout: 1000,
+                showType: 'show'
+            });
+        }
+    }
+</script>

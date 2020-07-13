@@ -1,0 +1,172 @@
+﻿<ul id="tree" class="easyui-tree">
+    <li>
+        <span>订单管理</span>
+        <ul>
+            <li><div onclick="addTab('查看在用订单', '/OrderManage/Index')">查看在用订单</div></li>
+            @if (Session["DdentityId"].ToString().Equals("4") || Session["DdentityId"].ToString().Equals("1"))
+            {
+                <li><div onclick="addTab('订单管理', '/OrderManage/ManageOrder')">订单管理</div></li>
+                <li><div onclick="addTab('查看历史订单', '/OrderManage/HistoryOrder')">查看历史订单</div></li>
+            }
+        </ul>
+    </li>
+    <li>
+        <span>房间管理</span>
+        <ul>
+            <li><div onclick="addTab('查看房间', '/RoomManage/Index')">查看房间</div></li>
+            @if (Session["DdentityId"].ToString().Equals("4") || Session["DdentityId"].ToString().Equals("1") || Session["DdentityId"].ToString().Equals("5") || Session["DdentityId"].ToString().Equals("6"))
+            {
+                <li><div onclick="addTab('房间管理', '/RoomManage/ManageRoom')">房间管理</div></li>
+            }
+            <li><div onclick="addTab('房间历史折扣', '/RoomManage/HistoryDiscount')">房间历史折扣</div></li>
+            <li><div onclick="addTab('房间历史金额', '/RoomManage/HistoryAmount')">房间历史金额</div></li>
+            <li><div onclick="addTab('房间历史状态', '/RoomManage/HistoryState')">房间历史状态</div></li>
+        </ul>
+    </li>
+
+    <li>
+        <span>员工管理</span>
+        <ul>
+            <li><div onclick="addTab('查看员工', '/StaffManage/Index')">查看员工</div></li>
+            @if (Session["DdentityId"].ToString().Equals("3") || Session["DdentityId"].ToString().Equals("1"))
+            {
+                <li><div onclick="addTab('员工管理', '/StaffManage/ManageStaff')">员工管理</div></li>
+            }
+        </ul>
+    </li>
+    <li>
+        <span>商品管理</span>
+        <ul>
+            <li><div onclick="addTab('商品情况', '/CommodityManage/Index')">商品情况</div></li>
+            @if (Session["DdentityId"].ToString().Equals("7") || Session["DdentityId"].ToString().Equals("1"))
+            {
+                <li><div onclick="addTab('管理商品', '/CommodityManage/ManageCommodity')">管理商品</div></li>
+            }
+            <li><div onclick="addTab('进货情况', '/CommodityManage/AddCommodityShow')">进货情况</div></li>
+            <li><div onclick="addTab('商品消耗', '/CommodityManage/ConsumeCommodity')">商品消耗</div></li>
+        </ul>
+    </li>
+    <li>
+        <span>通知管理</span>
+        <ul>
+            <li><div onclick="addTab('查看通知', '/RegulationsManage/ShowRegulations')">查看通知</div></li>
+            @if (Session["DdentityId"].ToString().Equals("3") || Session["DdentityId"].ToString().Equals("1"))
+            {
+                <li><div onclick="addTab('通知管理', '/RegulationsManage/ManageRegulations')">通知管理</div></li>
+            }
+        </ul>
+    </li>
+    <li>
+        <span>个人管理</span>
+        <ul>
+            <li><div onclick="showUserIn()">信息修改</div></li>
+            <li><div onclick="showPwd()">密码修改</div></li>
+        </ul>
+    </li>
+</ul>
+
+
+
+@**弹出的密码修改框*@
+<div id="dlgPwp" class="easyui-dialog" style="width:400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+    <form id="fmPwd" method="post" novalidate style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px">
+            <input name="pwdy" class="f1 easyui-passwordbox" label="原密码:" style="width:100%">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="pwdx" class="f1 easyui-passwordbox" label="现密码:" style="width:100%">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="pwdq" class="f1 easyui-passwordbox" label="确  认:" style="width:100%">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="editPwd()" style="width:90px">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript: $('#dlgPwp').dialog('close')" style="width:90px">关闭</a>
+</div>
+
+@**弹出的个人信息修改框*@
+<div id="dlgUserIn" class="easyui-dialog" style="width:400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+    <form id="fmUserIn" method="post" novalidate style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px">
+            <input id="nation" class="easyui-combobox" name="Nation" editable="false" label="民族:" style="width:100%" data-options="url:'/PersonalManage/GetNation',method:'get',valueField:'text',textField:'text', panelHeight:'200'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="Email" class="easyui-textbox" label="邮箱:" style="width:100%">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="Sex" class="easyui-combobox" name="Sex" editable="false" label="性别:" style="width:100%" data-options="url:'/PersonalManage/GetSex',method:'get',valueField:'Id',textField:'Sex', panelHeight:'auto'">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="editUserIn()" style="width:90px">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript: $('#dlgUserIn').dialog('close')" style="width:90px">关闭</a>
+</div>
+
+<script>
+    /*设置菜单不展开*/
+    $(function () {
+        $('#tree').tree('collapseAll');
+    })
+
+
+    /*显示修改的框*/
+    function showPwd() {
+        $('#dlgPwp').dialog('open').dialog('center').dialog('setTitle', '修改密码');
+        $('#fmPwd').form('clear');
+    }
+
+    /*修改密码按钮事件*/
+    function editPwd() {
+        $('#fmPwd').form('submit', {
+            url: '/PersonalManage/EditUserPwd',
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.success) {
+                    $('#dlgPwp').dialog('close');
+                } else {
+                    $.messager.show({
+                        title: '修改错误',
+                        msg: result.executeResult,
+                        timeout: 1000,
+                        showType: 'show'
+                    });
+                }
+            }
+        });
+    }
+
+    /*个人信息修改*/
+    function showUserIn() {
+        $('#dlgUserIn').dialog('open').dialog('center').dialog('setTitle', '个人基本信息修改');
+        $('#fmUserIn').form('load', '/PersonalManage/GetUserInByName');
+        url = '/PersonalManage/EditUserIn';
+    }
+
+    function editUserIn() {
+        $('#fmUserIn').form('submit', {
+            url: '/PersonalManage/EditUserIn',
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.success) {
+                    $('#dlgUserIn').dialog('close');
+                } else {
+                    $.messager.show({
+                        title: '修改错误',
+                        msg: result.executeResult,
+                        timeout: 1000,
+                        showType: 'show'
+                    });
+                }
+            }
+        });
+    }
+</script>

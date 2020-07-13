@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ac869b59d8ac49ceab6aec536a2dcf1b" Name="Diagram1">
+        <EntityTypeShape EntityType="HotelManageDBModel.CheckOut" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Commodity" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Commodity_Consume" Width="3.125" PointX="4.625" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Order" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Regulations" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Room" Width="1.5" PointX="4.875" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Room_Commodity" Width="2" PointX="7" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Room_Discount" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Room_State" Width="1.5" PointX="6.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Room_Type" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Staff" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Staff_Ddentity" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Staff_Dept" Width="1.5" PointX="8.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Staff_State" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Room_Amount" Width="1.5" PointX="5.375" PointY="10.75" />
+        <EntityTypeShape EntityType="HotelManageDBModel.Commodity_Purchase" Width="3" PointX="7.375" PointY="10.625" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

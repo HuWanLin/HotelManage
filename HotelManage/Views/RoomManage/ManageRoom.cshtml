@@ -1,0 +1,488 @@
+﻿<link rel="stylesheet" type="text/css" href="~/Content/jquery-easyui-1.6.11/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/jquery-easyui-1.6.11/themes/icon.css" />
+<script type="text/javascript" src="~/Content/jquery-easyui-1.6.11/jquery.min.js"></script>
+<script type="text/javascript" src="~/Content/jquery-easyui-1.6.11/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="~/Content/jquery-easyui-1.6.11/datagrid-detailview.js"></script>
+
+<style>
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+</style>
+@*显示数据的表格  *@
+<table id="dg" class="easyui-datagrid" style="width:100%;height:100%;"
+       url="/RoomManage/GetAllRoom" toolbar="#toolbar" striped="true" loadMsg="正在加载数据" rownumbers="true" fitColumns="true" singleSelect="true">
+    <thead>
+        <tr>
+            <th field="Id" width="50">编号</th>
+            <th field="CompleteNum" width="50">完整编号</th>
+            <th field="StateTxt" width="50">状态</th>
+            <th field="UnitPrice" width="50">单价</th>
+            <th field="DiscountNum" width="50">折扣</th>
+            <th field="ActualMoney" width="50">实际金额</th>
+            <th field="TypeTxt" width="50">房间类型</th>
+        </tr>
+    </thead>
+</table>
+
+@*表格的工具栏*@
+<div id="toolbar" style="padding:8px;height:auto">
+    <div style="margin-bottom:5px">
+        @if (Session["DdentityId"].ToString().Equals("1") || Session["DdentityId"].ToString().Equals("4"))
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="showOrder()">下订单</a>
+        }
+        @if (Session["DdentityId"].ToString().Equals("1"))
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="showCommodity()">增加商品</a>
+        }
+        @* 清洁、维修 *@
+        @if (Session["DdentityId"].ToString().Equals("5") || Session["DdentityId"].ToString().Equals("6"))
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="showState()">修改状态</a>
+        }
+        @* 前台 *@
+        @if (Session["DdentityId"].ToString().Equals("1") || Session["DdentityId"].ToString().Equals("4"))
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="showDiscount()">修改折扣</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="showAmount()">修改金额</a>
+        }
+        <span style="margin-right:10px;">楼层：</span><input id="floorNum" name="floorNum" class="easyui-combobox" editable="false" style="width:100px" data-options="url:'/RoomManage/GetFloorNum',method:'get',valueField:'Id',textField:'Sex', panelHeight:'auto'">
+        <span style="margin-right:10px;">完整编号：</span><input id="completeNum" name="completeNum" class="easyui-textbox" style="width:100px">
+        <span style="margin-right:10px;">房间类型：</span><input id="typeTxt" name="typeTxt" class="easyui-combobox" editable="false" style="width:100px" data-options="url:'/RoomManage/GetTypeTxt',method:'get',valueField:'Id',textField:'Sex', panelHeight:'auto'">
+        <span style="margin-right:10px;margin-left:10px;">状态:</span><input id="stateTxt" name="stateTxt" class="easyui-combobox" editable="false" style="width:100px" data-options="url:'/RoomManage/GetStateTxt',method:'get',valueField:'Id',textField:'Sex', panelHeight:'auto'">
+        <a href="#" class="easyui-linkbutton" style="margin-left:10px;" iconCls="icon-search" onclick="doSearch()">搜索</a>
+    </div>
+</div>
+
+@**弹出 下订单框*@
+<div id="dlcc" class="easyui-dialog" style="width:400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+    <form id="fmcc" method="post" novalidate style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px">
+            <input id="Id" name="Id" class="easyui-textbox easyui-validatebox" editable="false" label="房间编号:" style="width:100%">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="name" class="easyui-textbox easyui-validatebox" label="姓   名:" style="width:100%" data-options="required:true,missingMessage:'请不要留空'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="iDCard" class="easyui-textbox easyui-validatebox" label="身份证:" style="width:100%" data-options="validType:'length[18,18]',missingMessage:'请不要留空',invalidMessage:'身份证为 18 位'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="Sex" class="easyui-combobox easyui-validatebox" name="Sex" editable="false" label="性别:" style="width:100%" data-options="url:'/PersonalManage/GetSex',method:'get',valueField:'Id',textField:'Sex', panelHeight:'auto',missingMessage:'请不要留空'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="phone" class="easyui-textbox easyui-validatebox" label="手机:" style="width:100%" data-options="required:true,missingMessage:'请不要留空'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="deposit" class="easyui-numberspinner" label="押金:" style="width:100%" data-options="min:100,max:10000,editable:false,required:true,missingMessage:'请不要留空'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-datebox" name="estimatedTime" label="离店时间：" data-options="required:true,showSeconds:false" style="width:100%">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="addPurchase()" style="width:90px">添加</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript: $('#dlcc').dialog('close')" style="width:90px">关闭</a>
+</div>
+
+@** 弹出修改折扣框 *@
+<div id="dlgDiscount" class="easyui-dialog" style="width:400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+    <form id="fmDiscount" method="post" novalidate style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px">
+            <input id="Id" name="Id" class="easyui-textbox easyui-validatebox" editable="false" label="房间编号:" style="width:100%">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="DiscountNum" class="easyui-numberbox" label="折扣:" style="width:100%" required="required" data-options="min:1,max:100">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="editDiscount()" style="width:90px">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript: $('#dlgDiscount').dialog('close')" style="width:90px">关闭</a>
+</div>
+
+@** 弹出金额框 *@
+<div id="dlgAmount" class="easyui-dialog" style="width:400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+    <form id="fmAmount" method="post" novalidate style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px">
+            <input id="Id" name="Id" class="easyui-textbox easyui-validatebox" editable="false" label="房间编号:" style="width:100%">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="UnitPrice" class="easyui-numberbox" label="单价:" style="width:100%" required="required" data-options="min:1,max:10000">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="editAmount()" style="width:90px">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript: $('#dlgAmount').dialog('close')" style="width:90px">关闭</a>
+</div>
+
+@**弹出 消耗框*@
+<div id="dlcZ" class="easyui-dialog" style="width:400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+    <form id="fmcZ" method="post" novalidate style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px">
+            <input id="Id" name="Id" class="easyui-textbox easyui-validatebox" editable="false" label="房间编号:" style="width:100%">
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="namecombobox" name="namecombobox" class="easyui-combobox" editable="false" label="商品名称:" style="width:100%" data-options="url:'/CommodityManage/GetAllCommodityName',method:'get',valueField:'Id',textField:'Sex', panelHeight:'200'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="commodityNum" class="easyui-numberbox" label="分配数量:" style="width:100%" required="required" data-options="min:0,max:10000">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="addZ()" style="width:90px">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript: $('#dlcZ').dialog('close')" style="width:90px">关闭</a>
+</div>
+
+<script>
+    /*设置分页属性*/
+    $(function () {
+        init_datagrid();
+    });
+
+    function dgReload() {
+        $('#dg').datagrid('reload');
+        $('#namecombobox').combobox('reload');
+    }
+
+    /*表格属性初始化*/
+    function init_datagrid() {
+        $("#dg").datagrid({
+            method: 'post',
+            singleSelect: true,
+            remoteSort: true, //定义从服务器对数据进行排序。
+            pagination: true, //在DataGrid控件底部显示分页工具栏。
+            pageNumber: 1,
+            pageSize: 20,
+            pageList: [5, 10, 15, 20],
+            fitColumns: true,
+            rownumbers: true,
+            checkbox: true,
+            selectOnCheck: false,
+            checkOnSelect: false,
+            view: detailview,
+            detailFormatter: function (index, row) {
+                return '<div style="padding:2px;position:relative;"><table class="ddv"></table></div>';
+            },
+            /*加号触方法*/
+            onExpandRow: function (index, row) {
+                var ddv = $(this).datagrid('getRowDetail', index).find('table.ddv');
+                ddv.datagrid({
+                    url: '/CommodityManage/GetCommodityByroomId/' + row.Id,
+                    fitColumns: true,
+                    singleSelect: true,
+                    rownumbers: true,
+                    striped: 'true',
+                    loadMsg: '正在加载数据',
+                    height: 'auto',
+                    columns: [[
+                        { field: 'Id', title: '编号', width: 50 },
+                        { field: 'Name', title: '商品名字 ', width: 50, align: 'right' },
+                        { field: 'CommodityNum', title: '数量', width: 50, align: 'right' },
+                        { field: 'UnitPrice', title: '单价', width: 50, align: 'right' }
+                    ]],
+                    onResize: function () {
+                        $('#dg').datagrid('fixDetailRowHeight', index);
+                    },
+                    onLoadSuccess: function () {
+                        setTimeout(function () {
+                            $('#dg').datagrid('fixDetailRowHeight', index);
+                        }, 0);
+                    }
+                });
+                $('#dg').datagrid('fixDetailRowHeight', index);
+            }
+        });
+
+        var p = $('#dg').datagrid('getPager');
+        $(p).pagination({
+            beforePageText: '第',//页数文本框前显示的汉字
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示 {from}-{to} 条记录,共 {total} 条记录',
+        })
+    }
+
+    /*搜索按钮*/
+    function doSearch() {
+        $('#dg').datagrid('load', {
+            floorNum: $('#floorNum').val(),
+            completeNum: $('#completeNum').val(),
+            typeTxt: $('#typeTxt').val(),
+            stateTxt: $('#stateTxt').val()
+        });
+    }
+
+    /*显示下单的框*/
+    function showOrder() {
+        $('#fmcc').form('clear');
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            if (row.StateTxt == '可使用') {
+                $('#dlcc').dialog('open').dialog('center').dialog('setTitle', '下订单');
+                $('#fmcc').form('load', row);
+            } else {
+                $.messager.show({
+                    title: '下订单提示',
+                    msg: '房间 ' + row.CompleteNum + '  状态不为可使用，无法下单！',
+                    timeout: 1000,
+                    showType: 'show'
+                });
+            }
+        }
+        else {
+            $.messager.show({
+                title: '下订单提示',
+                msg: '请选择一个房间！',
+                timeout: 1000,
+                showType: 'show'
+            });
+        }
+    }
+
+    /*显示增商品的框*/
+    function  showCommodity(){
+        $('#fmcZ').form('clear');
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            if (row.StateTxt != '使用中') {
+                $('#dlcZ').dialog('open').dialog('center').dialog('setTitle', '商品分配');
+                $('#fmcZ').form('load', row);
+            }else{
+                $.messager.show({
+                    title: '增加提醒',
+                    msg: '房间使用中无法增加！',
+                    timeout: 1000,
+                    showType: 'show'
+                });
+            }
+        }
+        else {
+            $.messager.show({
+                title: '增加提醒',
+                msg: '请选择一个房间！',
+                timeout: 1000,
+                showType: 'show'
+            });
+        }
+    }
+
+    function addZ(){
+        $('#fmcZ').form('submit', {
+            url: '/RoomManage/IncreaseCommodityC',
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.success) {
+                    $('#dlcZ').dialog('close');
+                    $('#dg').datagrid('reload');
+                } else {
+                    $.messager.show({
+                        title: '添加错误',
+                        msg: result.executeResult,
+                        timeout: 1000,
+                        showType: 'show'
+                    });
+                }
+            }
+        });
+    }
+
+    /*添加订单按钮事件*/
+    function addPurchase() {
+        $('#fmcc').form('submit', {
+            url: '/OrderManage/AddOrder',
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.success) {
+                    $('#dlcc').dialog('close');
+                    $('#dg').datagrid('reload');
+                } else {
+                    $.messager.show({
+                        title: '添加错误',
+                        msg: result.executeResult,
+                        timeout: 1000,
+                        showType: 'show'
+                    });
+                }
+            }
+        });
+    }
+
+    /*弹出修改单价*/
+    function showAmount(){
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            if (row.StateTxt != '使用中') {
+                $('#dlgAmount').dialog('open').dialog('center').dialog('setTitle','修改单价');
+                $('#fmAmount').form('load',row);
+            }else{
+                $.messager.show({
+                    title: '修改金额提醒',
+                    msg: '房间在使用无法修改！',
+                    timeout: 1000,
+                    showType: 'show'
+                });
+            }
+        }else {
+            $.messager.show({
+                title: '修改金额提醒',
+                msg: '请选择一个房间！',
+                timeout: 1000,
+                showType: 'show'
+            });
+        }
+    }
+
+    function  editAmount(){
+        $('#fmAmount').form('submit', {
+            url: '/RoomManage/EditAmount',
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.success) {
+                    $('#dlgAmount').dialog('close');
+                    $('#dg').datagrid('reload');
+                } else {
+                    $.messager.show({
+                        title: '修改错误',
+                        msg: result.executeResult,
+                        timeout: 1000,
+                        showType: 'show'
+                    });
+                }
+            }
+        });
+    }
+
+    /*弹出修改折扣框*/
+    function showDiscount(){
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            if (row.StateTxt != '使用中') {
+                $('#dlgDiscount').dialog('open').dialog('center').dialog('setTitle','修改折扣');
+                $('#fmDiscount').form('load',row);
+            }else{
+                $.messager.show({
+                    title: '修改折扣提醒',
+                    msg: '房间在使用无法修改！',
+                    timeout: 1000,
+                    showType: 'show'
+                });
+            }
+        }else {
+            $.messager.show({
+                title: '修改折扣提醒',
+                msg: '请选择一个房间！',
+                timeout: 1000,
+                showType: 'show'
+            });
+        }
+    }
+
+    function editDiscount(){
+        $('#fmDiscount').form('submit', {
+            url: '/RoomManage/EditDiscount',
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.success) {
+                    $('#dlgDiscount').dialog('close');
+                    $('#dg').datagrid('reload');
+                } else {
+                    $.messager.show({
+                        title: '修改错误',
+                        msg: result.executeResult,
+                        timeout: 1000,
+                        showType: 'show'
+                    });
+                }
+            }
+        });
+    }
+
+    /*显示修改状态框*/
+    function showState() {
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            if (@Session["DdentityId"] == 5 && (row.StateTxt == '待清洁' || row.StateTxt == '在清洁')) {
+                $.post('/RoomManage/ModifyState/' + row.Id, function (result) {
+                    if (result.success) {
+                        $('#dg').datagrid('reload');
+                    } else {
+                        $.messager.show({
+                            title: '修改错误',
+                            msg: result.executeResult,
+                            timeout: 1000,
+                            showType: 'show'
+                        });
+                    }
+                }, 'json');
+            }
+            else if (@Session["DdentityId"] == 6 && ( row.StateTxt == '待清洁' || row.StateTxt == '可使用' || row.StateTxt == '维修中')) {
+                $.post('/RoomManage/ModifyState/' + row.Id, function (result) {
+                    if (result.success) {
+                        $('#dg').datagrid('reload');
+                    } else {
+                        $.messager.show({
+                            title: '修改错误',
+                            msg: result.executeResult,
+                            timeout: 1000,
+                            showType: 'show'
+                        });
+                    }
+                }, 'json');
+            } else {
+                $.messager.show({
+                    title: '修改状态提醒',
+                    msg: '房间 ' + row.CompleteNum + '  现在不可以修改状态！',
+                    timeout: 1000,
+                    showType: 'show'
+                });
+            }
+        }
+        else {
+            $.messager.show({
+                title: '修改状态提醒',
+                msg: '请选择一个房间！',
+                timeout: 1000,
+                showType: 'show'
+            });
+        }
+    }
+
+    /*修改状态事件*/
+    function editPwd() {
+        $('#fmPwd').form('submit', {
+            url: '/PersonalManage/EditUserPwd',
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.success) {
+                    $('#dlgPwp').dialog('close');
+                } else {
+                    $.messager.show({
+                        title: '修改错误',
+                        msg: result.executeResult,
+                        timeout: 1000,
+                        showType: 'show'
+                    });
+                }
+            }
+        });
+    }
+</script>

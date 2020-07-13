@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{09F64628-AB2E-4CAE-A254-8F6278EF331A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HotelManage.DAL</RootNamespace>
+    <AssemblyName>HotelManage.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CheckOut.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Commodity.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CommodityManageDAL.cs" />
+    <Compile Include="Commodity_Consume.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Commodity_Purchase.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeptManageDAL.cs" />
+    <Compile Include="HotelManageDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelManageDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HotelManageDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HotelManageDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelManageDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Order.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderManageDAL.cs" />
+    <Compile Include="PersonalManageDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Regulations.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RegulationsManageDAL.cs" />
+    <Compile Include="Room.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RoomManageDAL.cs" />
+    <Compile Include="Room_Amount.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Room_Commodity.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Room_Discount.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Room_State.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Room_Type.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Staff.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StaffManageDAL.cs" />
+    <Compile Include="Staff_Ddentity.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Dept.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_State.cs">
+      <DependentUpon>HotelManageDB.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="HotelManageDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HotelManageDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="HotelManageDB.edmx.diagram">
+      <DependentUpon>HotelManageDB.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HotelManageDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HotelManageDB.edmx</DependentUpon>
+      <LastGenOutput>HotelManageDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="HotelManageDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HotelManageDB.edmx</DependentUpon>
+      <LastGenOutput>HotelManageDB.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HotelManage.Models\HotelManage.Models.csproj">
+      <Project>{843910ef-7d6b-4e6f-8b0d-36730a992d27}</Project>
+      <Name>HotelManage.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

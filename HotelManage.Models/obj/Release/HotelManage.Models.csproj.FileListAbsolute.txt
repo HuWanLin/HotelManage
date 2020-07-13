@@ -1,0 +1,4 @@
+I:\HotelManage\HotelManage.Models\bin\Release\HotelManage.Models.dll
+I:\HotelManage\HotelManage.Models\bin\Release\HotelManage.Models.pdb
+I:\HotelManage\HotelManage.Models\obj\Release\HotelManage.Models.dll
+I:\HotelManage\HotelManage.Models\obj\Release\HotelManage.Models.pdb

@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HotelManageDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CheckOut">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="OrderId" Type="int" />
+    <Property Name="CheckOutDate" Type="datetime" />
+    <Property Name="refundAmount" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="Commodity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Stock" Type="int" />
+    <Property Name="SeparableNum" Type="int" />
+  </EntityType>
+  <EntityType Name="Commodity_Consume">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" Nullable="false" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="CommodityNum" Type="int" />
+    <Property Name="OrderId" Type="int" />
+    <Property Name="CommodityId" Type="int" />
+  </EntityType>
+  <EntityType Name="Commodity_Purchase">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" Nullable="false" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="CommodityId" Type="int" />
+    <Property Name="CommodityNum" Type="int" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" Nullable="false" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="RoomId" Type="int" Nullable="false" />
+    <Property Name="ConsumeId" Type="int" />
+    <Property Name="purchaseDate" Type="datetime" Nullable="false" />
+    <Property Name="Deposit" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="IDCard" Type="varchar" MaxLength="50" />
+    <Property Name="Sex" Type="bit" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="ActualMoney" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="EstimatedTime" Type="datetime" Nullable="false" />
+    <Property Name="LiveDays" Type="int" />
+  </EntityType>
+  <EntityType Name="Regulations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" Nullable="false" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="StaffName" Type="varchar" MaxLength="50" />
+    <Property Name="RegulationsContent" Type="text" />
+    <Property Name="Title" Type="varchar" MaxLength="255" />
+    <Property Name="DeptIdList" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="Room_TypeId" Type="int" />
+    <Property Name="Room_DiscountId" Type="int" />
+    <Property Name="Room_AmountId" Type="int" />
+    <Property Name="GoodLuckNum" Type="varchar" MaxLength="50" />
+    <Property Name="FloorNum" Type="varchar" MaxLength="50" />
+    <Property Name="Number" Type="varchar" MaxLength="50" />
+    <Property Name="CompleteNum" Type="varchar" MaxLength="50" />
+    <Property Name="Room_CommodityId" Type="int" />
+    <Property Name="Room_StateId" Type="int" />
+  </EntityType>
+  <EntityType Name="Room_Amount">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" Nullable="false" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="RoomId" Type="int" />
+    <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Room_Commodity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="RoomId" Type="int" />
+    <Property Name="CommodityId" Type="int" />
+    <Property Name="CommodityNum" Type="int" />
+  </EntityType>
+  <EntityType Name="Room_Discount">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" Nullable="false" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="RoomId" Type="int" />
+    <Property Name="DiscountNum" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Room_State">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" Nullable="false" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="RoomId" Type="int" />
+    <Property Name="StateTxt" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Room_Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="RoomName" Type="varchar" MaxLength="50" />
+    <Property Name="RoomId" Type="int" />
+    <Property Name="BedNum" Type="int" />
+    <Property Name="TypeTxt" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" Nullable="false" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="50" />
+    <Property Name="Sex" Type="bit" Nullable="false" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Nation" Type="varchar" MaxLength="50" />
+    <Property Name="DeptId" Type="int" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Staff_StateId" Type="int" />
+    <Property Name="Staff_DdentityId" Type="int" />
+  </EntityType>
+  <EntityType Name="Staff_Ddentity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="StaffId" Type="int" />
+    <Property Name="DdentityTxt" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Staff_Dept">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="StaffId" Type="int" />
+    <Property Name="DeptTxt" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Staff_State">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstablishDate" Type="datetime" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="DeleteDate" Type="datetime" />
+    <Property Name="StaffId" Type="int" />
+    <Property Name="StateTxt" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityContainer Name="HotelManageDBModelStoreContainer">
+    <EntitySet Name="CheckOut" EntityType="Self.CheckOut" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Commodity" EntityType="Self.Commodity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Commodity_Consume" EntityType="Self.Commodity_Consume" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Commodity_Purchase" EntityType="Self.Commodity_Purchase" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Regulations" EntityType="Self.Regulations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room_Amount" EntityType="Self.Room_Amount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room_Commodity" EntityType="Self.Room_Commodity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room_Discount" EntityType="Self.Room_Discount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room_State" EntityType="Self.Room_State" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room_Type" EntityType="Self.Room_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Staff_Ddentity" EntityType="Self.Staff_Ddentity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Staff_Dept" EntityType="Self.Staff_Dept" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Staff_State" EntityType="Self.Staff_State" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

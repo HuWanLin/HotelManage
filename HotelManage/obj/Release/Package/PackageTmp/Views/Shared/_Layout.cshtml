@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>酒店管理系统</title>   
+
+    <link rel="stylesheet" type="text/css" href="~/Content/jquery-easyui-1.6.11/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/jquery-easyui-1.6.11/themes/icon.css" />
+    <script type="text/javascript" src="~/Content/jquery-easyui-1.6.11/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Content/jquery-easyui-1.6.11/jquery.easyui.min.js"></script>
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+</head>
+<body class="easyui-layout">
+    <div data-options="region:'north'" style="height:100px;line-height:98px;background:url('../../Content/Image/zhuomian.png')">
+        <p style="margin:0 auto;font-size:40px;padding-left:50px;font-family:STKaiti;font-weight:900;">酒店管理系统</p>
+    </div>
+    <div data-options="region:'south',split:true" style="height:42px;line-height:35px;background:url('../../Content/Image/dibubeijing.png')">
+        <p style="text-align:center;margin:0 auto;">桂林电子科技大学北海校区毕业设计：基于.NET的酒店管理系统---梁桂梅</p>
+    </div>
+    <div data-options="region:'west',split:true" title="操作菜单" style="width:10%;height:980px;">
+        <div class="easyui-layout" data-options="fit:true">
+            <div data-options="region:'center'">
+                @if (1 == 2)
+                {
+                    @Html.Partial("_UserList1");
+                }
+                else
+                {
+                    @Html.Partial("_UserList2");
+                }
+            </div>
+            <div data-options="region:'south',split:true" style="height:60px;margin:0px;padding:0px;">
+                <p style="margin:0px;padding:7px 0px 0px 10px;font-weight:900;">欢&nbsp;&nbsp;迎：@Session["UserName"]</p>
+                <p style="margin:0px;padding:0px 20px 0px 0px;text-align:right;font-weight:900;" onclick="exit()">退出系统</p>
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'center',iconCls:'icon-home'" style="width:90%;height:980px;">
+        <div id="tabs" class="easyui-tabs" style="width:100%;height:100%">            
+            @RenderBody()
+        </div>       
+    </div>
+
+    <script>
+        /*退出*/
+        function exit() {
+            window.location.href = "../Login/Exit";
+        };
+    </script>
+</body>
+</html>

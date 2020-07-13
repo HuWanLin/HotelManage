@@ -1,0 +1,43 @@
+﻿<link rel="stylesheet" type="text/css" href="~/Content/jquery-easyui-1.6.11/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/jquery-easyui-1.6.11/themes/icon.css" />
+<script type="text/javascript" src="~/Content/jquery-easyui-1.6.11/jquery.min.js"></script>
+<script type="text/javascript" src="~/Content/jquery-easyui-1.6.11/jquery.easyui.min.js"></script>
+
+
+<div title="Contact">
+    <table id="dg" class="easyui-datagrid" style="width:100%;height:100%;"
+           url="getClas"
+           toolbar="#toolbar" pagination="true"
+           rownumbers="true" fitColumns="true" singleSelect="true">
+        <thead>
+            <tr>
+                <th field="Id" width="50">编号</th>
+                <th field="Name" width="50">名字</th>
+                <th field="Id2" width="50">编号</th>
+                <th field="Name2" width="50">名字</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="toolbar">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">修改</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除</a>
+    </div>
+
+    @**弹出的修改框*@
+    <div id="dlg" class="easyui-dialog" style="width:400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+        <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+            <h3>信息</h3>
+            <div style="margin-bottom:10px">
+                <input name="Id" class="easyui-textbox" required="true" label="First Name:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="Name" class="easyui-textbox" required="true" label="Last Name:" style="width:100%">
+            </div>
+        </form>
+    </div>
+    <div id="dlg-buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+    </div>
+</div>

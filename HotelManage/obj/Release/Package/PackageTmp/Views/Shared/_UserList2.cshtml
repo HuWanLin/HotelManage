@@ -1,0 +1,38 @@
+﻿<ul class="easyui-tree">
+    <li>
+        <span>个人管理</span>
+        <ul>
+            <li><div onclick="addTab('修改密码', '/Home/Contact')">修改密码</div></li>
+            <li><div onclick="addTab('个人信息', '/Home/Contact')">个人信息</div></li>
+        </ul>
+    </li>
+    <li>
+        <span>员工管理</span>
+        <ul>
+            <li><div onclick="addTab('员工信息', '/Home/Contact')">员工信息</div></li>
+            <li><div onclick="addTab('员工信息', '/Home/Contact')">员工信息</div></li>
+            <li><div onclick="addTab('员工信息', '/Home/Contact')">员工信息</div></li>
+        </ul>
+    </li>
+</ul>
+
+<script>
+    $(function () {
+       // $(".tree-icon,.tree-file").removeClass("tree-icon tree-file");
+    });
+
+    /*左边菜单创建 Tabs 页*/
+    function addTab(title, url) {
+        if ($('#tabs').tabs('exists', title)) {
+            $('#tabs').tabs('select', title);
+        } else {
+            var content = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:100%;"></iframe>';
+            $('#tabs').tabs('add', {
+                title: title,
+                content: content,
+                closable: true
+            });
+        }
+    }
+</script>
+

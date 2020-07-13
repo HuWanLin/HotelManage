@@ -1,0 +1,144 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div title="我的桌面">
+    @*显示数据的表格  *@
+    <table id="dg" class="easyui-datagrid" style="width:100%;height:100%;"
+           url="/Home/getClas" toolbar="#toolbar" rownumbers="true" fitColumns="true" singleSelect="true">
+        <thead>
+            <tr>
+                <th field="Id" width="50">编号</th>
+                <th field="Name" width="50">名字</th>
+                <th field="Age" width="50">年龄</th>
+                <th field="Pho" width="50">手机</th>
+            </tr>
+        </thead>
+    </table>
+
+
+    @*表格的工具栏*@
+    <div id="toolbar" style="padding:8px;height:auto">
+        <div style="margin-bottom:5px">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">新增</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">修改</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除</a>
+            <span style="margin-right:10px;">编号:</span><input id="Num" class="easyui-textbox" style="width:100px">
+            <span style="margin-right:10px;margin-left:10px;">名字:</span><input id="Name" class="easyui-textbox" style="width:100px">
+            <span style="margin-right:10px;margin-left:10px;">年龄:</span><input id="Age" class="easyui-textbox" style="width:100px">
+            <a href="#" class="easyui-linkbutton" style="margin-left:10px;" iconCls="icon-search" onclick="doSearch()">搜索</a>
+        </div>
+    </div>
+
+    @**弹出的修改框*@
+    <div id="dlg" class="easyui-dialog" style="width:400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+        <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+            <h3>信息</h3>
+            <div style="margin-bottom:10px">
+                <input name="Id" class="easyui-textbox" label="First Name:" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="Name" class="easyui-textbox" label="Last Name:" style="width:100%">
+            </div>
+        </form>
+    </div>
+    <div id="dlg-buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+    </div>
+</div>
+
+<script>
+    /*设置分页属性*/
+    $(function () {
+        init_datagrid();
+    });
+    function init_datagrid() {
+        $("#dg").datagrid({
+            method: 'post',
+            singleSelect: true,
+            remoteSort: true, //定义从服务器对数据进行排序。
+            pagination: true, //在DataGrid控件底部显示分页工具栏。
+            pageNumber: 1,
+            pageSize: 20,
+            pageList: [5, 10, 15, 20],
+            fitColumns: true,
+            rownumbers: true,
+            loadMsg: '正在加载数据',
+            checkbox: true,
+            emptyMsg: '没有数据 ',
+            selectOnCheck: false,
+            checkOnSelect: false
+        });
+
+        var p = $('#dg').datagrid('getPager');
+        $(p).pagination({
+            beforePageText: '第',//页数文本框前显示的汉字
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示 {from}-{to} 条记录,共 {total} 条记录',
+        })
+    }
+
+    var url;
+    /*搜索按钮*/
+    function doSearch() {
+        $('#dg').datagrid('load', {
+            num: $('#Num').val(),
+            name: $('#Name').val(),
+            age: $('#Age').val(),
+        });
+    }
+
+    function newUser() {
+        $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'New User');
+        $('#fm').form('clear');
+        url = 'save_user.php';
+    }
+    function editUser() {
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            $('#dlg').dialog('open').dialog('center').dialog('setTitle', '修改');
+            $('#fm').form('load', row);
+            url = 'returnClas/id=' + row.Id;
+        }
+    }
+    function saveUser() {
+        $('#fm').form('submit', {
+            url: 'saveClas',
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.errorMsg) {
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    alert("2");
+                    $('#dlg').dialog('close');		// close the dialog
+                    $('#dg').datagrid('reload');	// reload the user data
+                }
+            }
+        });
+    }
+    function destroyUser() {
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            $.messager.confirm('删除确认', '你确定要删除这条记录吗?', function (r) {
+                if (r) {
+                    $.post('destroy_user.php', { id: row.id }, function (result) {
+                        if (result.success) {
+                            $('#dg').datagrid('reload');	// reload the user data
+                        } else {
+                            $.messager.show({	// show error message
+                                title: 'Error',
+                                msg: result.errorMsg
+                            });
+                        }
+                    }, 'json');
+                }
+            });
+        }
+    }
+</script>
